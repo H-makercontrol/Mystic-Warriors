@@ -14,6 +14,38 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
+using UnityEngine;
+
+public class Projectile : MonoBehaviour
+{
+    public float speed = 10f;
+    public float lifeTime = 2f;
+
+    void Start()
+    {
+        Destroy(gameObject, lifeTime);
+    }
+
+    void Update()
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject); // Poof! Enemy gone!
+            Destroy(gameObject);       // Destroy the bullet
+        }
+    }
+}
+using UnityEngine;
+
+public class DummyEnemy : MonoBehaviour
+{
+    // For now, it just stands there looking cute and evil
+}
 
     void Update()
     {
